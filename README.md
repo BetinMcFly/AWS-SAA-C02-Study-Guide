@@ -1458,39 +1458,69 @@ Simple Notification Service is a pushed-based messaging service that provides a 
 - There is no long or short polling involved with SNS due to the instantaneous pushing of messages
 - SNS has flexible message delivery over multiple transport protocols and has a simple API.
 
-## Kinesis 
+# Amazon Kinesis
 
-### Kinesis Simplified:
-Amazon Kinesis makes it easy to collect, process, and analyze real-time, streaming data so you can get timely insights and react quickly to new information. With Amazon Kinesis, you can ingest real-time data such as video, audio, application logs, website clickstreams, and IoT telemetry data for machine learning, analytics, and other applications. Amazon Kinesis enables you to process and analyze data as it arrives and respond instantly instead of having to wait until all your data is collected before the processing can begin.
+## Descripción General
+- Amazon Kinesis facilita la recopilación, el procesamiento y el análisis de datos en streaming en tiempo real.
+- Proporciona insights oportunos y permite reacciones rápidas a nueva información.
 
-### Kinesis Key Details:
-- Amazon Kinesis makes it easy to load and analyze the large volumes of data entering AWS.
-- Kinesis is used for processing real-time data streams (data that is generated continuously) from devices constantly sending data into AWS so that said data can be collected and analyzed.
-- It is a fully managed service that automatically scales to match the throughput of your data and requires no ongoing administration. It can also batch, compress, and encrypt the data before loading it, minimizing the amount of storage used at the destination and increasing security.
-- There are three different types of Kinesis:
-  - Kinesis Streams
-    - Kinesis Streams works where the data producers stream their data into Kinesis Streams which can retain the data from one day up until 7 days. Once inside 
-      Kinesis Streams, the data is contained within shards.
-    - Kinesis Streams can continuously capture and store terabytes of data per hour from hundreds of thousands of sources such as website clickstreams, financial 
-      transactions, social media feeds, IT logs, and location-tracking events. For example: purchase requests from a large online store like Amazon, stock prices, Netflix 
-      content, Twitch content, online gaming data, Uber positioning and directions, etc.
-      
-  - Kinesis Firehose
-    - Amazon Kinesis Firehose is the easiest way to load streaming data into data stores and analytics tools. When data is streamed into Kinesis Firehose, there is no 
-      persistent storage there to hold onto it. The data has to be analyzed as it comes in so it's optional to have Lambda functions inside your Kinesis Firehose. Once 
-      processed, you send the data elsewhere.
-    - Kinesis Firehose can capture, transform, and load streaming data into Amazon S3, Amazon Redshift, Amazon Elasticsearch Service, and Splunk, enabling near real-time 
-      analytics with existing business intelligence tools and dashboards you’re already using today.
-      
-  - Kinesis Analytics
-    - Kinesis Analytics works with both Kinesis Streams and Kinesis Firehose and can analyze data on the fly. The data within Kinesis Analytics also gets sent elsewhere once 
-      it is finished processing. It analyzes your data inside of the Kinesis service itself.
+## Servicios de Kinesis
+- Colección de servicios para procesar flujos de datos diversos.
+- Datos procesados en "fragmentos".
+  - Cada fragmento puede ingerir 1000 registros por segundo.
+  - Límite predeterminado de 500 fragmentos, con posibilidad de solicitar aumentos a fragmentos ilimitados.
+- Registro consta de clave de partición, número de secuencia y blob de datos (hasta 1 MB).
+- Almacén de datos transitorios.
+  - Retención predeterminada de 24 horas, configurable hasta 7 días.
 
-- Partition keys are used with Kinesis so you can organize data by shard. This way, input from a particular device can be assigned a key that will limit its destination to a specific shard.
-- Partition keys are useful if you would like to maintain order within your shard.
-- Consumers, or the EC2 instances that read from Kinesis Streams, can go inside the shards to analyze what is in there. Once finished analyzing or parsing the data, the consumers can then pass on the data to a number of places for storage like a DB or S3.
-- The total capacity of a Kinesis stream is the sum of data within its constituent shards.
-- You can always increase the write capacity assigned to your shard table.
+### Transmisiones de vídeo de Kinesis
+- **Kinesis Video Streams** facilita la transmisión segura de vídeo desde dispositivos conectados a AWS.
+  - Almacena, cifra e indexa transmisiones de datos de vídeo.
+  - Permite acceso a través de API fáciles de usar.
+  - Datos almacenados en fragmentos: 5 transacciones por segundo para lecturas, 1000 registros por segundo para escrituras.
+  - Soporta cifrado en reposo.
+  - Poca aparición en exámenes de AWS.
+
+### Flujos de datos de Kinesis
+- **Kinesis Data Streams**
+  - Permite crear aplicaciones personalizadas que procesan o analizan datos de transmisión.
+  - Útil para mover rápidamente datos y procesarlos continuamente.
+  - Almacena datos para procesamiento posterior por aplicaciones.
+  - Casos de uso comunes:
+    - Ingesta acelerada de registros y alimentación de datos.
+    - Métricas e informes en tiempo real.
+    - Análisis de datos en tiempo real.
+    - Procesamiento de flujos complejos.
+  - Arquitectura de alto nivel:
+    - Productores envían datos continuamente.
+    - Consumidores procesan datos en tiempo real.
+    - Posibilidad de almacenar resultados en servicios de AWS como DynamoDB, Redshift o S3.
+
+### Kinesis Data Firehose
+- **Kinesis Data Firehose**
+  - La forma más sencilla de cargar datos de streaming en almacenes de datos y herramientas de análisis.
+  - Captura, transforma y carga datos de transmisión.
+  - No requiere escribir una aplicación ni administrar recursos.
+  - Procesa por lotes, comprime y cifra datos antes de cargarlos.
+  - Replicación sincrónica en tres zonas de disponibilidad.
+  - Destinos incluyen Amazon S3, Amazon Redshift, Amazon Elasticsearch Service, y Splunk.
+
+### Análisis de datos de Kinesis
+- **Amazon Kinesis Data Analytics**
+  - Procesa y analiza datos de streaming en tiempo real utilizando consultas SQL estándar.
+  - Casos de uso:
+    - Análisis de series de tiempo.
+    - Alimentación de paneles de control en tiempo real.
+    - Alertas y notificaciones en tiempo real.
+  - Admite Kinesis Streams y Kinesis Firehose como fuentes.
+  - Salida a S3, Redshift, Elasticsearch y más.
+
+### Biblioteca cliente de Kinesis
+- **Kinesis Client Library (KCL)**
+  - Ayuda a leer registros de Kinesis Stream con aplicaciones distribuidas.
+  - Actúa como intermediario entre la lógica de procesamiento de registros y Kinesis Data Streams.
+  - Gestiona la cantidad de procesadores de registros en relación con la cantidad de fragmentos y consumidores.
+
 
 ## Lambda
 
