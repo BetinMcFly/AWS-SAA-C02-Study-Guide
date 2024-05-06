@@ -1458,7 +1458,7 @@ Simple Notification Service is a pushed-based messaging service that provides a 
 - There is no long or short polling involved with SNS due to the instantaneous pushing of messages
 - SNS has flexible message delivery over multiple transport protocols and has a simple API.
 
-# Amazon Kinesis
+## Kinesis
 
 ## Descripción General
 - Amazon Kinesis facilita la recopilación, el procesamiento y el análisis de datos en streaming en tiempo real.
